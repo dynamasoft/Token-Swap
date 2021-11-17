@@ -1,0 +1,5 @@
+
+client/build/
+client/public/
+client/node_modules
+client/src/.env
