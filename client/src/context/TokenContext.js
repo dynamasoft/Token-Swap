@@ -5,7 +5,7 @@ const initialContext = {
   setEthBalance: () => {},
   SMTTokenBalance: 'Not Initialized',
   setSMTTokenBalance: () => {},
-  exchangeRate: 1,
+  exchangeRate: 'Not Initialized',
   setExchangeRate: () => {},
   isWalletConnectionModalOpen: false,
   setWalletConnectModal: () => {},

@@ -8,14 +8,16 @@ import WalletConnect from '../hooks/WalletConnect';
 const Header = () => {  
   const { account } = useWeb3React();
   const { fetchEthBalance, ethBalance } = Wallet();
-  const { fetchSMTTokenBalance, SMTTokenBalance }  =  SMTToken();
+  const { fetchSMTTokenBalance, fetchSMTTokenExchangeRate, SMTTokenBalance, exchangeRate }  =  SMTToken();
 
   useEffect(() => {    
     
     if (account) 
     {
+      debugger;
       fetchEthBalance();     
       fetchSMTTokenBalance();
+      fetchSMTTokenExchangeRate();
     }
   }, [account]);
 
@@ -27,6 +29,12 @@ const Header = () => {
     <div style={{ maxWidth: 300 }}>          
         SMT balance: {SMTTokenBalance}
     </div>
+
+    <div style={{ maxWidth: 300 }}>          
+        SMT Exchange Rate: {exchangeRate}
+    </div>
+
+
 
     <WalletConnect />
   </Navbar> 

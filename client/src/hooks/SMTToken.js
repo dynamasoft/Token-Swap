@@ -7,9 +7,7 @@ import { useTokenContext } from '../context/TokenContext';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { useEffect } from 'react';
 
-export const SMTToken = () => {  
-
-  debugger;
+export const SMTToken = () => {    
 
   const { account } = useWeb3React();
   
@@ -27,23 +25,25 @@ export const SMTToken = () => {
     setSMTTokenBalance(formatUnits(SMTTokenBalance, 8));
   };
 
-  const getSMTTokenExchangeRate = async () => {
+  const fetchSMTTokenExchangeRate = async () => {
     
     try {
-      
-      return setExchangeRate(2);
-
+      debugger;
+      var rate = await SMTTokenContract.callStatic.getExchangeRate();
+      rate = formatUnits(rate, 0);      
+      return setExchangeRate(rate);
     } 
     
     catch (error) 
     {
       console.log(error);
+      debugger;
     }
   };
 
   const deposit = async (amount) => {
 
-    debugger;
+    
 
     if (account)// && isValidNetwork) 
     {    
@@ -57,7 +57,7 @@ export const SMTToken = () => {
         });
      
         await txn.wait(1);
-        debugger;
+        
         await fetchSMTTokenBalance();
      
         setTxnStatus('COMPLETE');
@@ -66,7 +66,7 @@ export const SMTToken = () => {
       
       catch (error) 
       {
-        debugger;
+        
         setTxnStatus('ERROR');
       }
     }
@@ -76,14 +76,14 @@ export const SMTToken = () => {
   {
     if (account) 
     {
-      getSMTTokenExchangeRate();
+      fetchSMTTokenExchangeRate();
     }
   }, [account]);
 
   return {
     SMTTokenBalance,
     exchangeRate,
-    getSMTTokenExchangeRate,
+    fetchSMTTokenExchangeRate,
     fetchSMTTokenBalance,
     deposit,
   };
