@@ -32,7 +32,7 @@ contract SMT is ERC20, Pausable, Ownable {
     }
 
     function mint() payable public {        
-        uint smtToken = msg.value / _initialExchangeRate;       
+        uint smtToken = msg.value / (10 ** decimals()) * _initialExchangeRate;               
         _mint(msg.sender, smtToken);
     }    
 

@@ -19,7 +19,7 @@ describe("SMT Token Testing", function () {
     
     //deployment
     const token = await ethers.getContractFactory("SMT");
-    SMTToken = await token.deploy(name, symbol, ethers.utils.parseEther(initialExchangeRate));
+    SMTToken = await token.deploy(name, symbol, initialExchangeRate);
     await SMTToken.deployed();
     accounts = await ethers.getSigners();
     owner = accounts[0];    
@@ -63,24 +63,31 @@ describe("SMT Token Testing", function () {
   it('Get exchange rate' , async () => {  
     
     var rate = await SMTToken.getExchangeRate();        
-    var exchangeRate = ethers.utils.formatUnits(rate,18);
-    //console.log("exchange rate:"+ exchangeRate);
+    var exchangeRate = ethers.utils.formatUnits(rate,0);    
     expect(parseInt(exchangeRate)).to.equal(parseInt(initialExchangeRate));
 
   });
 
    it('Swap Token between ETH to SMT and verify the smart contract balance and owner balance' , async () => {  
    
-      var ethTobeTransfered = "1";
-      //token balance before;
-       var beforeBal =  await SMTToken.balanceOf(owner.address);
-      console.log("beforeMintBal:" + beforeBal);
+    //get exchange rate;
+    var rate = await SMTToken.getExchangeRate();        
+    var exchangeRate = ethers.utils.formatUnits(rate,0);    
+    console.log("exchange rate: ", exchangeRate);
+    
+    //token balance before;    
+    var beforeBal =  await SMTToken.balanceOf(owner.address);
+    console.log("beforeMintBal:" + beforeBal);
 
-      await SMTToken.mint({from: owner.address, value: ethers.utils.parseEther(ethTobeTransfered)}); 
+    //mint
+    var ethTobeTransfered = "1";
+    await SMTToken.mint({from: owner.address, value: ethers.utils.parseEther(ethTobeTransfered)}); 
 
-      var afterBal =  await SMTToken.balanceOf(owner.address);
-      console.log("aftermintBal:" + ethers.utils.formatEther(afterBal));
+    var afterBal =  await SMTToken.balanceOf(owner.address);
+    afterBal = ethers.utils.formatUnits(afterBal,0);
+    console.log("aftermintBal:" + afterBal);           
 
+    expect(parseInt(ethTobeTransfered) * parseInt(exchangeRate)).to.equal(parseInt(afterBal));
    });  
   
   
