@@ -50,17 +50,20 @@ describe("SMT Token Testing", function () {
     expect(await SMTToken.decimals()).to.be.bignumber.equal("18");
   });
 
-  //it('Assigns initial balance', async () => {
-  //let initialSupply = 1000;
-  //await SMTToken.mint(owner.address, initialSupply);
-  //expect(await SMTToken.balanceOf(owner.address)).to.equal(initialSupply);
-  // });
-
   it("Get exchange rate", async () => {
     var rate = await SMTToken.getExchangeRate();
     var exchangeRate = ethers.utils.formatUnits(rate, 0);
     expect(parseInt(exchangeRate)).to.equal(parseInt(initialExchangeRate));
   });
+
+
+  it("Test Minting with Zero value", async () => {
+    await expect(SMTToken.mint({
+      from: owner.address,
+      value: 0
+    })).to.be.revertedWith('this transaction requires eth');
+  });
+
 
   it("Swap Token between ETH to SMT and verify the smart contract balance and owner balance", async () => {
     //get exchange rate;

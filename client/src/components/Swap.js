@@ -19,7 +19,7 @@ const Swap = () => {
   const handleDepositSubmit = () => deposit(depositAmount);
 
   const convertedAmount = useMemo(
-    () => Number(depositAmount / exchangeRate).toFixed(4),
+    () => Number(depositAmount * exchangeRate).toFixed(4),
     [depositAmount, exchangeRate]
   );
 
@@ -65,16 +65,16 @@ const Swap = () => {
 
       <Row>
         <Col>
+          ETH{" "}
           <input
             type="number"
             onChange={(e) => setDepositAmount(e.target.value)}
           />
         </Col>
-
+        --> SMT
         <Col>
           <input type="number" readOnly value={convertedAmount} />
         </Col>
-
         <Col>
           <Button disabled={depositAmount <= 0} onClick={handleDepositSubmit}>
             Deposit {depositAmount} ETH

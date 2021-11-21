@@ -1,15 +1,31 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.2;
+pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "hardhat/console.sol";
 
 
-contract SMT is ERC20, Pausable, Ownable {
+contract SMT is ERC20, Pausable, Ownable, ReentrancyGuard {
 
+    /******************************************************************
+        STATE VARIABLES
+    ******************************************************************/
     uint public  _initialExchangeRate;
+    using SafeMath for uint256;
+    
+    /******************************************************************
+        MODIFIER
+    ******************************************************************/
+     /// @notice this modifier checks to make sure the property exists
+    modifier requireFund() {
+        //check if the object is null
+        require(msg.value > 0, "this transaction requires eth");
+        _;
+    }
 
     /**
      * @notice constructor
@@ -31,8 +47,11 @@ contract SMT is ERC20, Pausable, Ownable {
         _unpause();
     }
 
-    function mint() payable public {        
-        uint smtToken = msg.value / (10 ** decimals()) * _initialExchangeRate;               
+    function mint() payable 
+    requireFund    
+    nonReentrant
+    public {        
+        uint smtToken = msg.value.div(10 ** decimals()).mul(_initialExchangeRate);               
         _mint(msg.sender, smtToken);
     }    
 

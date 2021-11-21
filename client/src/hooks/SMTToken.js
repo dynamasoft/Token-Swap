@@ -22,7 +22,7 @@ export const SMTToken = () => {
   const fetchSMTTokenBalance = async () => 
   { 
     const SMTTokenBalance = await SMTTokenContract.balanceOf(account);
-    setSMTTokenBalance(formatUnits(SMTTokenBalance, 8));
+    setSMTTokenBalance(formatUnits(SMTTokenBalance, 18));
   };
 
   const fetchSMTTokenExchangeRate = async () => {
@@ -30,7 +30,7 @@ export const SMTToken = () => {
     try {
       debugger;
       var rate = await SMTTokenContract.callStatic.getExchangeRate();
-      rate = formatUnits(rate, 0);      
+      rate = formatUnits(rate, 0) / Math.pow(10, 18)      
       return setExchangeRate(rate);
     } 
     

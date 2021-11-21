@@ -1,15 +1,26 @@
-# Basic Sample Hardhat Project
+# Token Swap Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This project demonstrate the token swap functionality from ETH to SMT Token.
 
-Try running some of the following tasks:
+It was built using:
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+Smart Contract:
+- Hardhat
+- Solidity 0.8.2
+- Unit Testing using Waffle and Chai
+
+Front End
+- React
+- Web3-React for Smart Contract Connection
+- BootStrap
+- Context for state management.
+- Hooks
+
+Deployment:
+- Ropsten Network
+
+
+Smart Contract Best Pattern:
+
+
+

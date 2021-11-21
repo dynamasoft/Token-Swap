@@ -20,7 +20,7 @@ async function main() {
 
   const name = 'Smitty Token';
   const symbol = 'SMT';
-  const initialExchangeRate = "0.5"; //1 ETH = 2 SMT Token
+  const initialExchangeRate = "2"; //1 ETH = 2 SMT Token
 
   // We get the contract to deploy
   const SMT = await hre.ethers.getContractFactory("SMT");
