@@ -16,8 +16,7 @@ function App() {
   return (
     <AppContextProvider>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <div>
-          App
+        <div>          
           <Header />
           <Router>
             <Route exact path="/" component={Home} />

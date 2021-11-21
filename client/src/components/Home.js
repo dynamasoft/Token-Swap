@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <Container className="mt-5">
-      <Swap ></Swap>
+      <Swap></Swap>
     </Container>
   );
 };

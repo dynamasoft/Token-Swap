@@ -1,43 +1,59 @@
-import React,  { useEffect } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import { useWeb3React } from '@web3-react/core';
-import Wallet from '../hooks/Wallet';
-import { SMTToken } from '../hooks/SMTToken';
-import WalletConnect from '../hooks/WalletConnect';
+import React, { useEffect } from "react";
+import Navbar from "react-bootstrap/Navbar";
+import { useWeb3React } from "@web3-react/core";
+import Wallet from "../hooks/Wallet";
+import { SMTToken } from "../hooks/SMTToken";
+import WalletConnect from "../hooks/WalletConnect";
+import {
+  Row,
+  Container,
+  Col,
+  Breadcrumb,
+  Card,
+  Button,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
 
-const Header = () => {  
+const Header = () => {
   const { account } = useWeb3React();
   const { fetchEthBalance, ethBalance } = Wallet();
-  const { fetchSMTTokenBalance, fetchSMTTokenExchangeRate, SMTTokenBalance, exchangeRate }  =  SMTToken();
+  const {
+    fetchSMTTokenBalance,
+    fetchSMTTokenExchangeRate,
+    SMTTokenBalance,
+    exchangeRate,
+  } = SMTToken();
 
-  useEffect(() => {    
-    
-    if (account) 
-    {
+  useEffect(() => {
+    if (account) {
       debugger;
-      fetchEthBalance();     
+      fetchEthBalance();
       fetchSMTTokenBalance();
       fetchSMTTokenExchangeRate();
     }
   }, [account]);
 
   return (
-    <Navbar className="justify-content-between">
-    <div style={{ maxWidth: 300 }}>          
-        ETH balance: {ethBalance}
-    </div>
-    <div style={{ maxWidth: 300 }}>          
-        SMT balance: {SMTTokenBalance}
-    </div>
+    <Container>    
+      <Card className="mb-15" style={{ textAlign:'center' }}>
+        <WalletConnect />
+      </Card>
 
-    <div style={{ maxWidth: 300 }}>          
-        SMT Exchange Rate: {exchangeRate}
-    </div>
-
-
-
-    <WalletConnect />
-  </Navbar> 
+      <Card>
+        <Row className="mx-auto my-2">
+          <Col>
+            ETH balance: {ethBalance}
+          </Col>
+          <Col>
+            SMT balance: {SMTTokenBalance}
+          </Col>
+          <Col>
+            SMT Exchange Rate: {exchangeRate}
+          </Col>
+        </Row>
+      </Card>    
+    </Container>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { createContext, useReducer } from 'react';
 
 const initialContext = {
-  ethBalance: 'Not Initialized',
+  ethBalance: 'Na',
   setEthBalance: () => {},
-  SMTTokenBalance: 'Not Initialized',
+  SMTTokenBalance: 'Na',
   setSMTTokenBalance: () => {},
-  exchangeRate: 'Not Initialized',
+  exchangeRate: 'Na',
   setExchangeRate: () => {},
   isWalletConnectionModalOpen: false,
   setWalletConnectModal: () => {},
