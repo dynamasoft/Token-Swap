@@ -60,7 +60,8 @@ const Swap = () => {
   }
 
   return (
-    <Card>
+    
+    <Card>      
       <div className="mb-3">Deposit</div>
 
       <Row>
@@ -71,7 +72,7 @@ const Swap = () => {
             onChange={(e) => setDepositAmount(e.target.value)}
           />
         </Col>
-        --> SMT
+        SMT
         <Col>
           <input type="number" readOnly value={convertedAmount} />
         </Col>

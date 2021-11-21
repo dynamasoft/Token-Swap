@@ -28,3 +28,14 @@ Smart Contract Best Pattern:
 
 
 
+step to deploy to github pages
+npm install gh-pages --save-dev
+
+add the following in the package.json
+"homepage": "https://dynamasoft.github.io/token-swap/",
+
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build"
+
+
+https://dynamasoft.github.io/Token-Swap/
