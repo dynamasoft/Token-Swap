@@ -8,14 +8,11 @@ const Wallet = () => {
   const { ethBalance, setEthBalance } = useTokenContext();
 
   const fetchEthBalance = async () => {     
-
-    debugger;
+    
     if (library && active && account) 
-    {      
-      debugger;
+    { 
       const balance = await library.getBalance(account);
-      var convertedBal = parseFloat(formatEther(balance)).toPrecision(4);
-      debugger;
+      var convertedBal = parseFloat(formatEther(balance)).toPrecision(4);      
       setEthBalance(convertedBal);
     } 
     else 

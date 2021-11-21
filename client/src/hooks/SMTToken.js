@@ -1,5 +1,6 @@
 import { ContractFactory } from './ContractFactory';
 import SMT_TOKEN_JSON from '../artifacts/contracts/SMT.sol/SMT.json';
+import TOKEN_ADDRESS from '../artifacts/contracts/config.json';
 import Network from './Network';
 import { useWeb3React } from '@web3-react/core';
 import { useTokenContext } from '../context/TokenContext';
@@ -8,17 +9,20 @@ import { useEffect } from 'react';
 
 export const SMTToken = () => {  
 
+  debugger;
+
   const { account } = useWeb3React();
   
   const { isValidNetwork } = Network();
   
-  const SMTTokenContractAddress = ''; // rinkeby  
+  const SMTTokenContractAddress = TOKEN_ADDRESS; 
 
   const SMTTokenContract = ContractFactory(SMTTokenContractAddress, SMT_TOKEN_JSON.abi);
 
   const { setSMTTokenBalance, setExchangeRate, setTxnStatus, SMTTokenBalance, exchangeRate } = useTokenContext();
 
-  const fetchSMTTokenBalance = async () => {    
+  const fetchSMTTokenBalance = async () => 
+  { 
     const SMTTokenBalance = await SMTTokenContract.balanceOf(account);
     setSMTTokenBalance(formatUnits(SMTTokenBalance, 8));
   };
@@ -27,7 +31,7 @@ export const SMTToken = () => {
     
     try {
       
-      return 1;
+      return setExchangeRate(2);
 
     } 
     
@@ -39,7 +43,9 @@ export const SMTToken = () => {
 
   const deposit = async (amount) => {
 
-    if (account && isValidNetwork) 
+    debugger;
+
+    if (account)// && isValidNetwork) 
     {    
       try 
       {
@@ -51,7 +57,7 @@ export const SMTToken = () => {
         });
      
         await txn.wait(1);
-        
+        debugger;
         await fetchSMTTokenBalance();
      
         setTxnStatus('COMPLETE');
@@ -60,6 +66,7 @@ export const SMTToken = () => {
       
       catch (error) 
       {
+        debugger;
         setTxnStatus('ERROR');
       }
     }

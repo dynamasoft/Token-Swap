@@ -1,5 +1,6 @@
 const { expect,use } = require("chai");
 const { ethers } = require("hardhat");
+//import { BigNumber } from 'ethers';
 const {deployContract, MockProvider, solidity} = require('ethereum-waffle');
 use(solidity);
 use(require('chai-bignumber')());
@@ -8,7 +9,7 @@ describe("SMT Token Testing", function () {
 
   const name = 'Smitty Token';
   const symbol = 'SMT';
-  const initialExchangeRate = "0.5"; //1 ETH = 2 SMT Token
+  const initialExchangeRate = "2"; //1 ETH = 2 SMT Token
   let SMTToken;
   let provider = ethers.provider; 
   let accounts;
@@ -52,15 +53,38 @@ describe("SMT Token Testing", function () {
     expect(await SMTToken.decimals()).to.be.bignumber.equal('18');
   });
 
-   it('Assigns initial balance', async () => {    
-     let initialSupply = 1000;
+   //it('Assigns initial balance', async () => {    
+     //let initialSupply = 1000;
+     //await SMTToken.mint(owner.address, initialSupply);     
+     //expect(await SMTToken.balanceOf(owner.address)).to.equal(initialSupply);
+  // });
 
-     await SMTToken.mint(owner.address, initialSupply);     
-     expect(await SMTToken.balanceOf(owner.address)).to.equal(initialSupply);
-   });
 
+  it('Get exchange rate' , async () => {  
+    
+    var rate = await SMTToken.getExchangeRate();        
+    var exchangeRate = ethers.utils.formatUnits(rate,18);
+    //console.log("exchange rate:"+ exchangeRate);
+    expect(parseInt(exchangeRate)).to.equal(parseInt(initialExchangeRate));
 
-  it('Swap Token between ETH to SMT and verify the smart contract balance and owner balance', async () => {  
+  });
+
+   it('Swap Token between ETH to SMT and verify the smart contract balance and owner balance' , async () => {  
+   
+      var ethTobeTransfered = "1";
+      //token balance before;
+       var beforeBal =  await SMTToken.balanceOf(owner.address);
+      console.log("beforeMintBal:" + beforeBal);
+
+      await SMTToken.mint({from: owner.address, value: ethers.utils.parseEther(ethTobeTransfered)}); 
+
+      var afterBal =  await SMTToken.balanceOf(owner.address);
+      console.log("aftermintBal:" + ethers.utils.formatEther(afterBal));
+
+   });  
+  
+  
+   it('Testing the receive function', async () => {  
 
     //amount of eth to be transferred
     var ethTobeTransfered = "1";

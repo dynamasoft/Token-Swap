@@ -5,7 +5,7 @@ const initialContext = {
   setEthBalance: () => {},
   SMTTokenBalance: 'Not Initialized',
   setSMTTokenBalance: () => {},
-  exchangeRate: 0,
+  exchangeRate: 1,
   setExchangeRate: () => {},
   isWalletConnectionModalOpen: false,
   setWalletConnectModal: () => {},
@@ -53,21 +53,17 @@ const appReducer = (state, { type, payload }) =>
 };
 
 const TokenContext = createContext(initialContext);
-
-
 export const useTokenContext = () => React.useContext(TokenContext);
 
 export const AppContextProvider = ({ children }) => 
 {
-  const [store, dispatch] = useReducer(appReducer, initialContext);
-  debugger;
+  const [store, dispatch] = useReducer(appReducer, initialContext); 
 
   const contextValue = {
     
     ethBalance: store.ethBalance,
     
-    setEthBalance: (balance) => {
-      debugger;      
+    setEthBalance: (balance) => {      
       dispatch({ type: 'SET_ETH_BALANCE', payload: balance });
     },
     

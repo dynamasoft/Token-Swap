@@ -11,6 +11,13 @@ contract SMT is ERC20, Pausable, Ownable {
 
     uint public  _initialExchangeRate;
 
+    /**
+     * @notice constructor
+     * @dev make sure to pass name and symbol to the parent class
+     * @param name name of token
+     * @param symbol symbon of token
+     * @param initialExchangeRate initial exchange rate
+     */
     constructor(string memory name, string memory symbol,  uint initialExchangeRate) ERC20(name, symbol) 
     {
         _initialExchangeRate = initialExchangeRate;
@@ -24,8 +31,14 @@ contract SMT is ERC20, Pausable, Ownable {
         _unpause();
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+    function mint() payable public {        
+        uint smtToken = msg.value / _initialExchangeRate;       
+        _mint(msg.sender, smtToken);
+    }    
+
+    function getExchangeRate() public view returns(uint)
+    {
+        return _initialExchangeRate;
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 amount)
@@ -39,6 +52,11 @@ contract SMT is ERC20, Pausable, Ownable {
     function withdraw() public onlyOwner
     {
         payable(owner()).transfer(address(this).balance);
+    }
+
+    function balanceOf(address owner) public view override returns(uint256) 
+    {
+        return super.balanceOf(owner); 
     }
 
     function totalBalance() external view returns(uint bal)

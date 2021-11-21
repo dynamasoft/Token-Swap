@@ -8,12 +8,14 @@ import WalletConnect from '../hooks/WalletConnect';
 const Header = () => {  
   const { account } = useWeb3React();
   const { fetchEthBalance, ethBalance } = Wallet();
+  const { fetchSMTTokenBalance, SMTTokenBalance }  =  SMTToken();
 
   useEffect(() => {    
-    debugger;
+    
     if (account) 
     {
       fetchEthBalance();     
+      fetchSMTTokenBalance();
     }
   }, [account]);
 
@@ -21,6 +23,9 @@ const Header = () => {
     <Navbar className="justify-content-between">
     <div style={{ maxWidth: 300 }}>          
         ETH balance: {ethBalance}
+    </div>
+    <div style={{ maxWidth: 300 }}>          
+        SMT balance: {SMTTokenBalance}
     </div>
 
     <WalletConnect />

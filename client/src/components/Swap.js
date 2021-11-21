@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import { SMTToken } from '../hooks/SMTToken';
-import { TokenCondiv } from '../context/TokenContext'
+import { TokenContext } from '../context/TokenContext'
 import Spinner from 'react-bootstrap/Spinner';
 import Wallet from '../hooks/Wallet';
 import Transaction from '../hooks/Transaction';
@@ -11,7 +11,7 @@ const Swap = () => {
 
   const [depositAmount, setDepositAmount] = useState(0);  
 
-  const { deposit, cTokenBalance, exchangeRate } = SMTToken();
+  const { deposit, SMTTokenBalance, exchangeRate } = SMTToken();
 
   const { ethBalance } = Wallet();
 
@@ -19,7 +19,11 @@ const Swap = () => {
   
   const handleDepositSubmit = () => deposit(depositAmount);
   
-  const convertedAmount = useMemo(() => Number(depositAmount / exchangeRate).toFixed(4), [depositAmount, exchangeRate]);  
+  const convertedAmount = useMemo(() => 
+    Number(depositAmount / exchangeRate).toFixed(4), [depositAmount, exchangeRate]
+    );  
+
+    console.log(exchangeRate);
 
   if (txnStatus === 'LOADING') {
     return (
@@ -58,11 +62,13 @@ const Swap = () => {
   return (
     <div>
       <div>
-        <div block t2 className="mb-3">
+        <div className="mb-3">
           Deposit
         </div>        
-        <input type="number" value={depositAmount} onChange={()=> setDepositAmount()} />        
-        <input type="number" value={convertedAmount} />
+        <input type="number" onChange={ e=> setDepositAmount(e.target.value)} />
+
+        <input type="number" readOnly value={convertedAmount}  />  
+
         <Button className="mt-3" disabled={depositAmount <= 0} onClick={handleDepositSubmit}>Deposit {depositAmount} ETH</Button>
       </div>
     </div>

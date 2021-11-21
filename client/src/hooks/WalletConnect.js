@@ -13,7 +13,7 @@ const WalletButton = () => {
     
     return (
       <div className="d-flex flex-row justify-content-between" style={{ width: 350 }}>        
-        <div uppercase color="green" t3 lineHeight="40px" className="mx-4">
+        <div className="mx-4">
           {shortenAddress(account)}
         </div>
         <Button onClick={deactivate}>Log Out</Button>
@@ -23,7 +23,7 @@ const WalletButton = () => {
 
   return (
     <div>      
-      <div uppercase color="green" t3 lineHeight="40px" className="mx-2">
+      <div className="mx-2">
         Metamask
       </div>      
       <Button onClick={() => activate(injected)}>Connect</Button>
